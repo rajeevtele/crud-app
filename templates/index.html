@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <body>
+    <h1>Items</h1>
+    <form method="post" action="/add">
+      <input name="name" placeholder="Item name">
+      <button type="submit">Add</button>
+    </form>
+    <ul>
+      {% for id, name in items %}
+        <li>{{ name }} <a href="/delete/{{ id }}">Delete</a></li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
