@@ -25,6 +25,18 @@ def add():
     conn.commit()
     return redirect(url_for('index'))
 
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    conn = sqlite3.connect(DB)
+    if request.method == 'POST':
+        name = request.form['name']
+        conn.execute('UPDATE items SET name=? WHERE id=?', (name, id))
+        conn.commit()
+        return redirect(url_for('index'))
+    item = conn.execute('SELECT * FROM items WHERE id=?', (id,)).fetchone()
+    conn.close()
+    return render_template('edit.html', item=item)
+
 @app.route('/delete/<int:id>')
 def delete(id):
     conn = sqlite3.connect(DB)
